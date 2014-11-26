@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+    <RelativeLayout android:layout_height="fill_parent" android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Button android:layout_height="wrap_content" android:layout_width="fill_parent" android:text="@string/toggle" android:layout_alignParentBottom="true" android:id="@+id/toggleButton"/>
+
+    <ListView android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/list" android:layout_alignParentTop="true" android:layout_above="@id/toggleButton"/>
+
+</RelativeLayout>
