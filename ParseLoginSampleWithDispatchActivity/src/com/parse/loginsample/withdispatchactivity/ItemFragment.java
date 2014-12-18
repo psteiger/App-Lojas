@@ -101,7 +101,7 @@ public class ItemFragment extends Fragment { //implements AbsListView.OnItemClic
         mainAdapter.setImageKey("icon");
 
         // Initialize the subclass of ParseQueryAdapter
-        urgentTodosAdapter = new CustomAdapter(getActivity());
+        //urgentTodosAdapter = new CustomAdapter(getActivity());
 
         // Initialize ListView and set initial view to mainAdapter
         listView = (ListView) rootView.findViewById(R.id.list); // getView().findViewById(R.id.listView1);

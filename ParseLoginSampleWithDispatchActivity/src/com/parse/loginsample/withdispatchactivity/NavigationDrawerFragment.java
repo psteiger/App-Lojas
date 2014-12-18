@@ -21,6 +21,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.parse.ParseUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,8 +104,12 @@ public class NavigationDrawerFragment extends Fragment {
         });
 
         List<DrawerItem> dataList = new ArrayList<DrawerItem>();
-        dataList.add(new DrawerItem(getString(R.string.title_section1), R.drawable.button));
-        dataList.add(new DrawerItem(getString(R.string.title_section2), R.drawable.ic_action_about));
+        if (ParseUser.getCurrentUser().getUsername().equals("admin")) {
+            dataList.add(new DrawerItem("Gerenciar Cupons", R.drawable.button));
+            dataList.add(new DrawerItem("Lista Usuarios", R.drawable.ic_action_about));
+        } else {
+            dataList.add(new DrawerItem(getString(R.string.title_section1), R.drawable.button));
+        }
         //dataList.add(new DrawerItem(getString(R.string.title_section3), R.drawable.ciencia));
         /*
         dataList.add(new DrawerItem(getString(R.string.title_section4), R.drawable.ic_action_group));
@@ -281,12 +287,12 @@ public class NavigationDrawerFragment extends Fragment {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
+/*
         if (item.getItemId() == R.id.action_search) {
             Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
             return true;
         }
-
+*/
         return super.onOptionsItemSelected(item);
     }
 

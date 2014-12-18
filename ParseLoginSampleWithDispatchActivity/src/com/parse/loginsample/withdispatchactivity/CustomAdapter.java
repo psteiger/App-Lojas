@@ -20,19 +20,20 @@ import java.util.List;
 
 public class CustomAdapter extends ParseQueryAdapter<ParseObject> {
 
-    public CustomAdapter(Context context) {
+    public CustomAdapter(Context context, final String str) {
         // Use the QueryFactory to construct a PQA that will only show
         // Todos marked as high-pri
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery create() {
                 ParseQuery query = new ParseQuery("Loja");
 
-                //query.whereEqualTo("highPri", true);
+                query.whereContains("nome", str);
                 return query;
             }
         });
     }
 
+    /*
     // Customize the layout by overriding getItemView
     @Override
     public View getItemView(ParseObject object, View v, ViewGroup parent) {
@@ -79,7 +80,7 @@ public class CustomAdapter extends ParseQueryAdapter<ParseObject> {
                 pontosView.setText(object.getCreatedAt().toString());
             }
         });
-*/
+//*//*
 
         // Add a reminder of how long this item has been outstanding
         TextView pontosView = (TextView) v.findViewById(R.id.pontos);
@@ -90,5 +91,5 @@ public class CustomAdapter extends ParseQueryAdapter<ParseObject> {
         timestampView.setText(object.getCreatedAt().toString());
         return v;
     }
-
+*/
 }

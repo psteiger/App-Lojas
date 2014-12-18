@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +16,12 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.ListView;
+
+import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 //import com.amit.rssfeed.RssReaderActivity;
@@ -45,6 +52,10 @@ public class MainActivity   extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+        installation.put("user",ParseUser.getCurrentUser());
+        installation.saveInBackground();
 
         /** CUSTOM **
         dataList = new ArrayList<DrawerItem>();
@@ -78,20 +89,47 @@ public class MainActivity   extends Activity
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        Fragment fragment = ItemFragment.newInstance(position + 1);
+        Fragment fragment = ProfileFragment.newInstance(position + 1);
+
+        ParseUser user = ParseUser.getCurrentUser();
 
         switch (position) {
             case 0:
-                fragment = ItemFragment.newInstance(position + 1);
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Loja");
+                query.include("adminId");
+                query.whereEqualTo("adminId", user);
+                try {
+                    Log.e("MainActivity loja", query.getFirst().getObjectId().toString());
+                    Intent intent = new Intent(this,NewCupom.class);
+                    startActivity(intent);
+                } catch (ParseException e) {
+                    Intent intent = new Intent(this,LojaListActivity.class);
+                    startActivity(intent);
+                    Log.e("MainActivity loading", "LojaListActivity");
+                }
+/*
+                if (true) {
+
+                    Intent intent = new Intent(this,LojaListActivity.class);
+                    startActivity(intent);
+                } else {
+                    fragment = ItemFragment.newInstance(position + 1);
+                }*/
                 break;
             case 1:
-                fragment = ProfileFragment.newInstance(position + 1);
-                fragmentTransaction.replace( R.id.container, fragment ).addToBackStack("tag").commit();
+                query = ParseQuery.getQuery("Loja");
+                query.include("adminId");
+                query.whereEqualTo("adminId", user);
+                try {
+                    Log.e("MainActivity loja", query.getFirst().getObjectId().toString());
+                    Intent intent = new Intent(this,UserList.class);
+                    startActivity(intent);
+                } catch (ParseException e) {
 
+                    Log.e("MainActivity loading", "UserList");
+                }
                 break;
-            case 2:
-                //mTitle = getString(R.string.title_section3);
-                break;
+
         }
 
         fragmentManager.beginTransaction()
